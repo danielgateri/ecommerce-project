@@ -172,6 +172,64 @@ I seek to develop an e-commerce website that brings the customer closer to goods
  REFERENCES orders(id)
 );
  
+ 17.CREATE TABLE carts (
+ id SERIAL PRIMARY KEY,
+ user_id INTEGER NOT NULL UNIQUE,
+
+ CONSTRAINT fk_cart_user
+  FOREIGN KEY (user_id)
+  REFERENCES users(id)
+);
+
+
+18.CREATE TABLE cart_items (
+ id SERIAL PRIMARY KEY,
+ cart_id INTEGER NOT NULL,
+ product_id INTEGER NOT NULL,
+ quantity INTEGER NOT NULL DEFAULT 1,
+
+ CONSTRAINT fk_cart_item_cart
+ FOREIGN KEY (cart_id)
+ REFERENCES carts(id),
+
+ CONSTRAINT fk_cart_item_product
+ FOREIGN KEY (product_id)
+ REFERENCES products(id),
+ 
+ CONSTRAINT positive_quantity
+ CHECK (quantity > 0),
+
+ CONSTRAINT unique_cart_product
+ UNIQUE(cart_id, product_id)
+);
+
+
+19.CREATE TABLE reviews (
+ id SERIAL PRIMARY KEY,
+ user_id INTEGER NOT NULL,
+ product_id INTEGER NOT NULL,
+ rating INTEGER NOT NULL,
+ comment TEXT,
+ created_at TIMESTAMP DEFAULT
+ CURRENT_TIMESTAMP,
+
+ CONSTRAINT fk_review_user
+ FOREIGN KEY (user_id)
+ REFERENCES users(id),
+
+ CONSTRAINT fk_review_product
+ FOREIGN KEY (product_id)
+ REFERENCES products(id),
+
+ CONSTRAINT valid_rating
+ CHECK (rating BETWEEN 1 AND 5),
+
+ CONSTRAINT unique_user_product_review
+ UNIQUE (user_id,product_id)
+);
+
+
+
 
 
 
