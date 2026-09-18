@@ -1,0 +1,15 @@
+.ven{
+    text-decoration: none;
+    
+}
+
+.ven1:hover{
+    text-decoration: underline;
+}
+.h4{
+    font-size: small;
+}
+.py-4 {
+ padding-top: 1.5rem !important;
+ padding-bottom: 1.5rem !important;
+}
